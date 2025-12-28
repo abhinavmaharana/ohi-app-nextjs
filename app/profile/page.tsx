@@ -7,16 +7,8 @@ import ProfileContent from '@/components/ProfileContent'
 import LoginModal from '@/components/LoginModal'
 import Footer from '@/components/Footer'
 
-// API Configuration
-const USE_CORS_PROXY = false
-const USE_DEMO_MODE = true
-const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'
-
-const API_BASE_URL_STAGING = 'https://staging.ohiapp.com/api/v2/public/user'
-const POSTS_API_BASE_URL_STAGING = 'https://staging.ohiapp.com/api/v2/public/posts'
-
-const API_BASE_URL = USE_CORS_PROXY ? `${CORS_PROXY}${API_BASE_URL_STAGING}` : API_BASE_URL_STAGING
-const POSTS_API_BASE_URL = USE_CORS_PROXY ? `${CORS_PROXY}${POSTS_API_BASE_URL_STAGING}` : POSTS_API_BASE_URL_STAGING
+// API Configuration - Using Next.js API routes to avoid CORS issues
+const USE_DEMO_MODE = true // Set to false to disable demo mode fallback
 
 // Demo data
 const DEMO_USER_DATA = {
@@ -65,22 +57,10 @@ interface UserData {
   is_business_profile: boolean
 }
 
-interface ApiError extends Error {
-  isCORS?: boolean
-}
-
-function isCORSError(error: unknown): error is ApiError {
-  if (error instanceof Error) {
-    return error.message.includes('CORS') || 
-           error.message.includes('Failed to fetch') ||
-           error.name === 'TypeError'
-  }
-  return false
-}
-
 async function fetchUserProfile(userId: string): Promise<UserData> {
   try {
-    const url = `${API_BASE_URL}/${userId}`
+    // Use Next.js API route to avoid CORS issues
+    const url = `/api/user/${userId}`
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -101,18 +81,14 @@ async function fetchUserProfile(userId: string): Promise<UserData> {
     }
   } catch (error) {
     console.error('Error fetching user profile:', error)
-    if (isCORSError(error)) {
-      const corsError = new Error('CORS Error: API requests are blocked. This usually happens when testing locally. The API needs to allow requests from your origin, or you need to use a CORS proxy for development.') as ApiError
-      corsError.isCORS = true
-      throw corsError
-    }
     throw error
   }
 }
 
 async function fetchBrandStories(userId: string): Promise<string[]> {
   try {
-    const url = `${POSTS_API_BASE_URL}/${userId}?brandStories=true`
+    // Use Next.js API route to avoid CORS issues
+    const url = `/api/posts/${userId}?brandStories=true`
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -134,9 +110,6 @@ async function fetchBrandStories(userId: string): Promise<string[]> {
     }
   } catch (error) {
     console.error('Error fetching brand stories:', error)
-    if (isCORSError(error)) {
-      console.warn('CORS error when fetching brand stories. This is expected in local development.')
-    }
     return []
   }
 }
@@ -170,8 +143,9 @@ function ProfilePageContent() {
           fetchBrandStories(userId)
         ])
       } catch (err) {
-        if (USE_DEMO_MODE && (isCORSError(err) || (err as ApiError).isCORS)) {
-          console.warn('API request failed (likely CORS). Using demo data for development.')
+        // If API fails and demo mode is enabled, use demo data
+        if (USE_DEMO_MODE) {
+          console.warn('API request failed. Using demo data for development.')
           user = DEMO_USER_DATA
           stories = DEMO_BRAND_STORIES
           demoMode = true
@@ -196,15 +170,10 @@ function ProfilePageContent() {
       }, 30000)
     } catch (err) {
       setLoading(false)
-      const errorObj = err as ApiError
+      const errorObj = err as Error
       
-      if (errorObj.isCORS || isCORSError(err)) {
-        setError('CORS Error: Unable to fetch profile data.')
-        setErrorHint('This usually happens when testing locally. The API server needs to allow CORS requests from your origin. For development, you can enable USE_DEMO_MODE or USE_CORS_PROXY in the code, or test from a server that has CORS configured.')
-      } else {
-        setError(errorObj.message || 'Failed to load profile. Please try again later.')
-        setErrorHint(null)
-      }
+      setError(errorObj.message || 'Failed to load profile. Please try again later.')
+      setErrorHint('If this persists, check the API routes in /app/api/user and /app/api/posts')
       
       console.error('Failed to load profile:', err)
     }
