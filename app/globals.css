@@ -1632,6 +1632,7 @@ button {
   min-height: 100vh;
   background: #000;
   color: #fff;
+  padding: 20px;
   transition: filter 0.3s ease;
 }
 
