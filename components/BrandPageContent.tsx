@@ -60,9 +60,9 @@ export default function BrandPageContent({ brandId, brandName, stories, loading 
           <Image 
             src="/assets/img/logo.png" 
             alt="Ohi Logo"
-            width={44}
-            height={44}
-            style={{ borderRadius: '50%', backgroundColor: '#ffd37d', padding: '8px' }}
+            width={28}
+            height={28}
+            style={{ objectFit: 'contain' }}
           />
         </div>
       </header>
