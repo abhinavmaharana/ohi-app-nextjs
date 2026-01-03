@@ -114,6 +114,36 @@ async function fetchBrandStories(userId: string): Promise<string[]> {
   }
 }
 
+async function fetchAllPosts(userId: string): Promise<string[]> {
+  try {
+    // Use Next.js API route to avoid CORS issues
+    // Call without brandStories parameter to get all posts
+    const url = `/api/posts/${userId}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+    })
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    
+    const result = await response.json()
+    
+    if (result.statusCode === 200 && result.status === 'success') {
+      return result.data || []
+    } else {
+      console.warn('Failed to fetch all posts:', result.message)
+      return []
+    }
+  } catch (error) {
+    console.error('Error fetching all posts:', error)
+    return []
+  }
+}
+
 function ProfilePageContent() {
   const searchParams = useSearchParams()
   const userId = searchParams.get('userId') || '1174158'
@@ -123,6 +153,7 @@ function ProfilePageContent() {
   const [errorHint, setErrorHint] = useState<string | null>(null)
   const [userData, setUserData] = useState<UserData | null>(null)
   const [brandStories, setBrandStories] = useState<string[]>([])
+  const [allPosts, setAllPosts] = useState<string[]>([])
   const [currentTab, setCurrentTab] = useState<'brand' | 'all'>('brand')
   const [showModal, setShowModal] = useState(false)
   const [usingDemoData, setUsingDemoData] = useState(false)
@@ -137,17 +168,23 @@ function ProfilePageContent() {
       let stories: string[]
       let demoMode = false
 
+      let allPostsData: string[] = []
       try {
-        [user, stories] = await Promise.all([
+        const [userDataResult, brandStoriesResult, allPostsResult] = await Promise.all([
           fetchUserProfile(userId),
-          fetchBrandStories(userId)
+          fetchBrandStories(userId),
+          fetchAllPosts(userId)
         ])
+        user = userDataResult
+        stories = brandStoriesResult
+        allPostsData = allPostsResult
       } catch (err) {
         // If API fails and demo mode is enabled, use demo data
         if (USE_DEMO_MODE) {
           console.warn('API request failed. Using demo data for development.')
           user = DEMO_USER_DATA
           stories = DEMO_BRAND_STORIES
+          allPostsData = DEMO_BRAND_STORIES
           demoMode = true
         } else {
           throw err
@@ -156,6 +193,7 @@ function ProfilePageContent() {
 
       setUserData(user)
       setBrandStories(stories)
+      setAllPosts(allPostsData)
       setUsingDemoData(demoMode)
       setLoading(false)
 
@@ -241,6 +279,7 @@ function ProfilePageContent() {
             <ProfileContent
               userData={userData}
               brandStories={brandStories}
+              allPosts={allPosts}
               currentTab={currentTab}
               onTabChange={setCurrentTab}
             />

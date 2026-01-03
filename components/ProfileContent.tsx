@@ -23,6 +23,7 @@ interface UserData {
 interface ProfileContentProps {
   userData: UserData
   brandStories: string[]
+  allPosts: string[]
   currentTab: 'brand' | 'all'
   onTabChange: (tab: 'brand' | 'all') => void
 }
@@ -39,7 +40,7 @@ const PLACEHOLDER_IMAGES = [
   'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=400&h=400&fit=crop'
 ]
 
-export default function ProfileContent({ userData, brandStories, currentTab, onTabChange }: ProfileContentProps) {
+export default function ProfileContent({ userData, brandStories, allPosts, currentTab, onTabChange }: ProfileContentProps) {
   // Remove duplicate interests based on interest_id
   const uniqueInterests = userData.interest_details.reduce((acc, interest) => {
     if (!acc.find(i => i.interest_id === interest.interest_id)) {
@@ -51,8 +52,9 @@ export default function ProfileContent({ userData, brandStories, currentTab, onT
   const displayInterests = uniqueInterests.slice(0, 2)
   const hasMoreInterests = uniqueInterests.length > 2
 
-  const currentPosts = currentTab === 'brand' ? brandStories : PLACEHOLDER_IMAGES
-  const displayPosts = currentPosts.slice(0, 9)
+  // Use real API data for both tabs, fallback to placeholder only if data is empty
+  const currentPosts = currentTab === 'brand' ? brandStories : allPosts
+  const displayPosts = currentPosts.length > 0 ? currentPosts.slice(0, 9) : []
 
   return (
     <>
