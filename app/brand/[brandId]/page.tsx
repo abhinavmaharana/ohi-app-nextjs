@@ -81,6 +81,22 @@ function BrandPageContentWrapper() {
     loadStories()
   }, [brandId])
 
+  useEffect(() => {
+    const page = document.querySelector('.brand-page')
+
+    const handleUserClick = () => {
+      if (!showModal) {
+        setShowModal(true)
+      }
+    }
+
+    page?.addEventListener('click', handleUserClick)
+
+    return () => {
+      page?.removeEventListener('click', handleUserClick)
+    }
+  }, [showModal])
+
   return (
     <>
       <div className={`brand-page ${showModal ? 'blurred' : ''}`}>

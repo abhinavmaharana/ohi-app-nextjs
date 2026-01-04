@@ -221,6 +221,20 @@ function ProfilePageContent() {
     initializePage()
   }, [initializePage])
 
+  useEffect(() => {
+    const handleUserClick = () => {
+      setShowModal(true)
+    }
+  
+    // Attach listener to profile page content
+    const page = document.querySelector(".profile-container")
+    page?.addEventListener("click", handleUserClick)
+  
+    return () => {
+      page?.removeEventListener("click", handleUserClick)
+    }
+  }, [])  
+
   return (
     <>
       <div className={`profile-page ${showModal ? 'blurred' : ''}`}>
