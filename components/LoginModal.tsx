@@ -28,7 +28,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             height={60}
           />
         </div>
-        <h2 className="modal-title">Create your profile in 30 seconds, to show people what you use</h2>
+        <h2 className="modal-title">Create your profile in <span className="modal-title-highlight">30 seconds</span>, to show people what you use</h2>
         <a href="https://ruc32.app.link/Ohi_app_Website">
           <button className="modal-download-btn">Download the app</button>
         </a>

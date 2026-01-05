@@ -1408,9 +1408,8 @@ button {
 }
 
 .tab-btn.active {
-  color: #00ffe7;
-  border-bottom-color: #00ffe7;
-  background: rgba(0, 255, 231, 0.05);
+  background: #007bff;
+  border-radius: 5px;
 }
 
 /* Posts Grid */
@@ -1506,7 +1505,7 @@ button {
 
 .modal-title {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   color: #fff;
   margin: 0 0 30px 0;
   line-height: 1.4;
@@ -1515,12 +1514,18 @@ button {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.modal-title-highlight {
+  font-size: 22px;
+  font-weight: 800;
+  font: bold;
+}
+
 .modal-download-btn {
-  background: #00ffe7;
-  color: #000;
+  background: #007bff;
+  color: #fff;
   border: none;
   padding: 14px 32px;
-  border-radius: 30px;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
