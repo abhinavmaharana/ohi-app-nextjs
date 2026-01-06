@@ -85,27 +85,21 @@ async function fetchUserProfile(userId: string): Promise<UserData> {
   }
 }
 
-async function fetchBrandStories(userId: string): Promise<string[]> {
+async function fetchBrandStories(userId: string): Promise<any[]> {
   try {
     const url = `/api/posts/${userId}?brandStories=true`
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: { 'Accept': 'application/json' },
-    })
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+    const response = await fetch(url, { headers: { Accept: "application/json" } })
 
     const result = await response.json()
 
-    if (result.statusCode === 200 && result.status === 'success') {
-      // 👈 convert objects → array of URLs
-      return (result.data || []).map((item: any) => item.url)
+    if (result.statusCode === 200 && result.status === "success") {
+      // ⬇️ return full objects { url, brand_name }
+      return result.data || []
     }
 
-    console.warn('Failed to fetch brand stories:', result.message)
     return []
   } catch (err) {
-    console.error('Error fetching brand stories:', err)
+    console.error("Error fetching brand stories:", err)
     return []
   }
 }

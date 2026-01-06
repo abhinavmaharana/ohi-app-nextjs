@@ -22,7 +22,7 @@ interface UserData {
 
 interface ProfileContentProps {
   userData: UserData
-  brandStories: string[]
+  brandStories: (string | { url: string; brand_name?: string })[]
   allPosts: string[]
   currentTab: 'brand' | 'all'
   onTabChange: (tab: 'brand' | 'all') => void
@@ -55,6 +55,8 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
   // Use real API data for both tabs, fallback to placeholder only if data is empty
   const currentPosts = currentTab === 'brand' ? brandStories : allPosts
   const displayPosts = currentPosts.length > 0 ? currentPosts.slice(0, 9) : []
+
+  console.log("Brand stories →", brandStories);
 
   return (
     <>
@@ -138,21 +140,34 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
             {currentTab === 'brand' ? 'No brand stories yet' : 'No posts yet'}
           </div>
         ) : (
-          displayPosts.map((imageUrl, index) => (
-            <div key={index} className="post-item">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={imageUrl}
-                alt={currentTab === 'brand' ? `Brand Story ${index + 1}` : `Post ${index + 1}`}
-                loading="lazy"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement
-                  target.onerror = null
-                  target.src = 'https://via.placeholder.com/400/333333/ffffff?text=Image'
-                }}
-              />
-            </div>
-          ))
+          displayPosts.map((post, index) => {
+            const imageUrl = typeof post === "string" ? post : post.url
+            const brandName = typeof post === "object" ? post.brand_name : null
+          
+            return (
+              <div key={index} className="post-item">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imageUrl}
+                  alt={currentTab === 'brand' ? `Brand Story ${index + 1}` : `Post ${index + 1}`}
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement
+                    target.onerror = null
+                    target.src = '/placeholder.png'
+                  }}
+                />
+          
+                {brandName && (
+                  <div className="brand-badge">
+                    <span className="brand-icon">🏷️</span>
+                    <span className="brand-text">{brandName}</span>
+                  </div>
+                )}
+              </div>
+            )
+          })
+          
         )}
       </div>
     </>
