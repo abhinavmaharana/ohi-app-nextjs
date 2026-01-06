@@ -10,10 +10,17 @@ interface Story {
   total_views: number
 }
 
+interface BrandPost {
+  url: string
+  is_purchased: boolean
+  brand_name?: string;
+}
+
 interface BrandPageContentProps {
   brandId: string
   brandName: string
   stories: Story[]
+  posts: BrandPost[]
   loading: boolean
 }
 
@@ -27,7 +34,16 @@ const DEMO_BRAND_HOSTS = [
   { id: 6, name: 'Ralph Lauren', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop' },
 ]
 
-export default function BrandPageContent({ brandId, brandName, stories, loading }: BrandPageContentProps) {
+export default function BrandPageContent({
+  brandId,
+  brandName,
+  stories,
+  posts,
+  loading
+}: BrandPageContentProps) {
+
+  console.log("Posts →", posts);
+
   // Get unique usernames from stories for brand hosts (fallback to demo data)
   const brandHosts = stories.length > 0 
     ? Array.from(new Set(stories.map(s => s.username)))
@@ -89,7 +105,8 @@ export default function BrandPageContent({ brandId, brandName, stories, loading 
                   onError={(e) => {
                     const target = e.target as HTMLImageElement
                     target.onerror = null
-                    target.src = 'https://via.placeholder.com/400/333333/ffffff?text=Story'
+                    target.src = '/assets/img/fallback-avatar.png'
+                    target.style.display = 'none'
                   }}
                 />
                 <div className="story-overlay">
@@ -127,7 +144,8 @@ export default function BrandPageContent({ brandId, brandName, stories, loading 
                   onError={(e) => {
                     const target = e.target as HTMLImageElement
                     target.onerror = null
-                    target.src = 'https://via.placeholder.com/100/333333/ffffff?text=' + host.name.charAt(0)
+                    target.src = '/assets/img/fallback-avatar.png'
+                    target.style.display = 'none'
                   }}
                 />
               </div>
@@ -136,6 +154,61 @@ export default function BrandPageContent({ brandId, brandName, stories, loading 
           ))}
         </div>
       </div>
+
+      {/* Brand Posts Section */}
+<div className="brand-posts-section">
+  <h2 className="section-title">Brand Posts</h2>
+
+  <div className="posts-grid">
+    {posts.length === 0 && (
+      <div className="empty-state">
+        No brand posts yet
+      </div>
+    )}
+
+    {posts.slice(0, 12).map((post, index) => {
+      const isVideo = post.url.endsWith('.mp4') || post.url.endsWith('.mov')
+
+      return (
+        <div key={index} className="post-item">
+
+          {/* Locked Overlay */}
+          {!post.is_purchased && (
+            <div className="lock-overlay">
+              <span className="lock-badge">🔒 Locked</span>
+            </div>
+          )}
+
+          {/* Video */}
+          {isVideo ? (
+            <video
+              src={post.url}
+              className={`post-media ${!post.is_purchased ? 'blurred' : ''}`}
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            // Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={post.url}
+              className={`post-media ${!post.is_purchased ? 'blurred' : ''}`}
+              alt="Brand Post"
+              onError={(e) => {
+                const t = e.target as HTMLImageElement
+                t.onerror = null
+                t.src = '/assets/img/fallback-avatar.png'
+                t.style.display = 'none'
+              }}
+            />
+          )}
+        </div>
+      )
+    })}
+  </div>
+</div>
+
 
       {/* Unlock Section */}
       <div className="brand-unlock-section">

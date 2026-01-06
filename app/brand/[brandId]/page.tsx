@@ -21,6 +21,12 @@ interface StoriesResponse {
   data: Story[]
 }
 
+interface BrandPost {
+  url: string
+  is_purchased: boolean
+  brand_name?: string;
+}
+
 async function fetchBrandStories(brandId: string): Promise<Story[]> {
   try {
     const url = `/api/stories/${brandId}`
@@ -48,6 +54,39 @@ async function fetchBrandStories(brandId: string): Promise<Story[]> {
   }
 }
 
+async function fetchBrandPosts(
+  brandId: string,
+  page = 0,
+  pageSize = 20
+): Promise<BrandPost[]> {
+
+  try {
+    const res = await fetch(
+      `/api/brand-posts/${brandId}?page=${page}&pageSize=${pageSize}`,
+      {
+        method: 'GET',
+        headers: { Accept: 'application/json' }
+      }
+    )
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`)
+    }
+
+    const result = await res.json()
+
+    if (result.statusCode === 200 && result.status === 'success') {
+      return result.data || []
+    }
+
+    return []
+  } catch (err) {
+    console.error('Error fetching brand posts:', err)
+    return []
+  }
+}
+
+
 function BrandPageContentWrapper() {
   const params = useParams()
   const brandId = params?.brandId as string || '1'
@@ -56,30 +95,43 @@ function BrandPageContentWrapper() {
   const [stories, setStories] = useState<Story[]>([])
   const [showModal, setShowModal] = useState(false)
   const [brandName, setBrandName] = useState<string>('')
+  const [posts, setPosts] = useState<BrandPost[]>([])
 
   useEffect(() => {
-    const loadStories = async () => {
+    const loadBrandData = async () => {
       setLoading(true)
+  
       try {
-        const data = await fetchBrandStories(brandId)
-        setStories(data)
-        if (data.length > 0) {
-          setBrandName(data[0].brand_name)
+        // fetch stories
+        const storiesData = await fetchBrandStories(brandId)
+  
+        // fetch purchased + non-purchased posts
+        const postsData = await fetchBrandPosts(brandId)
+  
+        setStories(storiesData)
+        setPosts(postsData)
+  
+        // set brand name from API
+        if (storiesData.length > 0) {
+          setBrandName(storiesData[0].brand_name)
         }
+  
+      } catch (err) {
+        console.error('Failed to load brand data:', err)
+  
+      } finally {
         setLoading(false)
-
-        // Start timer for login modal (30 seconds)
+  
+        // show login popup after 30s
         setTimeout(() => {
           setShowModal(true)
         }, 30000)
-      } catch (error) {
-        console.error('Failed to load stories:', error)
-        setLoading(false)
       }
     }
-
-    loadStories()
+  
+    loadBrandData()
   }, [brandId])
+  
 
   useEffect(() => {
     const page = document.querySelector('.brand-page')
@@ -100,12 +152,13 @@ function BrandPageContentWrapper() {
   return (
     <>
       <div className={`brand-page ${showModal ? 'blurred' : ''}`}>
-        <BrandPageContent 
-          brandId={brandId}
-          brandName={brandName}
-          stories={stories}
-          loading={loading}
-        />
+      <BrandPageContent 
+  brandId={brandId}
+  brandName={brandName}
+  stories={stories}
+  posts={posts}
+  loading={loading}
+/>
       </div>
 
       {/* Login Modal - Rendered outside blurred container */}
