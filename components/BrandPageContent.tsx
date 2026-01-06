@@ -232,28 +232,43 @@ export default function BrandPageContent({
 
       {/* Additional Content Section */}
       <div className="brand-additional-content">
-        {stories.length > 3 && (
-          <>
-            <div className="content-image-item">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={stories[3].url}
-                alt="Brand content"
-                className="content-image"
-              />
-            </div>
-            {stories.length > 4 && (
-              <div className="content-image-item">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={stories[4].url}
-                  alt="Brand content"
-                  className="content-image"
-                />
-              </div>
-            )}
-          </>
-        )}
+        {/* Additional Content Section */}
+{stories.length > 3 && (
+  <div className="brand-additional-content">
+
+    {/* Story 4 */}
+    {stories[3] && (
+      <div className="content-image-item">
+        <img
+          src={stories[3].url}
+          alt="Brand content"
+          className="content-image"
+          onError={e => {
+            const t = e.target as HTMLImageElement
+            t.style.display = "none"
+          }}
+        />
+      </div>
+    )}
+
+    {/* Story 5 */}
+    {stories[4] && (
+      <div className="content-image-item">
+        <img
+          src={stories[4].url}
+          alt="Brand content"
+          className="content-image"
+          onError={e => {
+            const t = e.target as HTMLImageElement
+            t.style.display = "none"
+          }}
+        />
+      </div>
+    )}
+
+  </div>
+)}
+
       </div>
     </div>
   )
