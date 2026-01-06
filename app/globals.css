@@ -1752,7 +1752,8 @@ button {
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  padding: 6px;
+  padding-bottom: 10px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.6));
 }
 
 .lock-badge {
@@ -1764,7 +1765,29 @@ button {
   font-weight: 600;
 }
 
+/* 🪄 Watermark text */
+.watermark-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
 
+.watermark-overlay span {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.85);
+
+  background: rgba(0,0,0,0.45);
+  padding: 10px 14px;
+  border-radius: 10px;
+
+  transform: rotate(-12deg);
+  text-transform: uppercase;
+}
 
 /* Brand Name Section */
 .brand-name-section {

@@ -56,13 +56,13 @@ async function fetchBrandStories(brandId: string): Promise<Story[]> {
 
 async function fetchBrandPosts(
   brandId: string,
-  page = 0,
+  page = 1,
   pageSize = 20
 ): Promise<BrandPost[]> {
 
   try {
     const res = await fetch(
-      `/api/brand-posts/${brandId}?page=${page}&pageSize=${pageSize}`,
+      `/api/brand-posts/${brandId}`,
       {
         method: 'GET',
         headers: { Accept: 'application/json' }
@@ -107,6 +107,7 @@ function BrandPageContentWrapper() {
   
         // fetch purchased + non-purchased posts
         const postsData = await fetchBrandPosts(brandId)
+        console.log("Brand Posts API →", postsData)
   
         setStories(storiesData)
         setPosts(postsData)

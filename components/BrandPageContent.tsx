@@ -172,6 +172,13 @@ export default function BrandPageContent({
       return (
         <div key={index} className="post-item">
 
+          {/* Watermark for locked posts */}
+          {!post.is_purchased && (
+    <div className="watermark-overlay">
+      <span>Premium Content</span>
+    </div>
+  )}
+
           {/* Locked Overlay */}
           {!post.is_purchased && (
             <div className="lock-overlay">
