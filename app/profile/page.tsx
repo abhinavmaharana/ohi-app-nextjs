@@ -87,32 +87,29 @@ async function fetchUserProfile(userId: string): Promise<UserData> {
 
 async function fetchBrandStories(userId: string): Promise<string[]> {
   try {
-    // Use Next.js API route to avoid CORS issues
     const url = `/api/posts/${userId}?brandStories=true`
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
+      headers: { 'Accept': 'application/json' },
     })
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-    
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+
     const result = await response.json()
-    
+
     if (result.statusCode === 200 && result.status === 'success') {
-      return result.data || []
-    } else {
-      console.warn('Failed to fetch brand stories:', result.message)
-      return []
+      // 👈 convert objects → array of URLs
+      return (result.data || []).map((item: any) => item.url)
     }
-  } catch (error) {
-    console.error('Error fetching brand stories:', error)
+
+    console.warn('Failed to fetch brand stories:', result.message)
+    return []
+  } catch (err) {
+    console.error('Error fetching brand stories:', err)
     return []
   }
 }
+
 
 async function fetchAllPosts(userId: string): Promise<string[]> {
   try {
