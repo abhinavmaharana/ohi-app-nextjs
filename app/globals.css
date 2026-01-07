@@ -1362,6 +1362,8 @@ button {
 }
 
 .profile-views {
+  display: flex;
+  gap: 5px;
   font-size: 15px;
   text-decoration: underline;
   font-weight: 600;
@@ -1388,7 +1390,7 @@ button {
 }
 
 .view-more {
-  color: #999;
+  color: #E3C565;
   font-size: 13px;
   cursor: pointer;
 }
