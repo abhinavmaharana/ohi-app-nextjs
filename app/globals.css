@@ -1361,9 +1361,19 @@ button {
   line-height: 1.4;
 }
 
+.profile-views {
+  font-size: 15px;
+  text-decoration: underline;
+  font-weight: 600;
+  color: #dcdcdc;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+}
+
 .profile-interests {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   flex-wrap: wrap;
 }

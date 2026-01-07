@@ -17,6 +17,7 @@ const DEMO_USER_DATA = {
   total_posts_count: 50,
   total_followers_count: 7,
   total_following_count: 3,
+  post_views: 12,
   interest_details: [
     { interest_id: 1, name: "Reading" },
     { interest_id: 2, name: "At Office" },
@@ -51,6 +52,7 @@ interface UserData {
   total_posts_count: number
   total_followers_count: number
   total_following_count: number
+  post_views: number
   interest_details: InterestDetail[]
   profile_image: string
   user_bio: string

@@ -14,6 +14,7 @@ interface UserData {
   total_posts_count: number
   total_followers_count: number
   total_following_count: number
+  post_views: number
   interest_details: InterestDetail[]
   profile_image: string
   user_bio: string
@@ -41,6 +42,7 @@ const PLACEHOLDER_IMAGES = [
 ]
 
 export default function ProfileContent({ userData, brandStories, allPosts, currentTab, onTabChange }: ProfileContentProps) {
+
   // Remove duplicate interests based on interest_id
   const uniqueInterests = userData.interest_details.reduce((acc, interest) => {
     if (!acc.find(i => i.interest_id === interest.interest_id)) {
@@ -52,11 +54,9 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
   const displayInterests = uniqueInterests.slice(0, 2)
   const hasMoreInterests = uniqueInterests.length > 2
 
-  // Use real API data for both tabs, fallback to placeholder only if data is empty
+  // Use real API data for both tabs
   const currentPosts = currentTab === 'brand' ? brandStories : allPosts
   const displayPosts = currentPosts.length > 0 ? currentPosts.slice(0, 9) : []
-
-  console.log("Brand stories →", brandStories);
 
   return (
     <>
@@ -94,16 +94,23 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
       {/* Profile Details */}
       <div className="profile-details">
         <h1 className="profile-username">{userData.full_name || 'User'}</h1>
+
         {userData.user_bio && (
           <p className="profile-bio">{userData.user_bio}</p>
         )}
+
+        {userData?.post_views && (
+          <p className='profile-views'>Post views: {userData?.post_views}</p>
+        )}
         
         <div className="profile-interests">
-          {displayInterests.map((interest) => (
-            <span key={interest.interest_id} className="interest-tag">
-              {interest.name}
-            </span>
-          ))}
+          <div className='profile-interest-area'>
+            {displayInterests.map((interest) => (
+              <span key={interest.interest_id} className="interest-tag">
+                {interest.name}
+              </span>
+            ))}
+          </div>
           {hasMoreInterests && (
             <span className="view-more">View More</span>
           )}
@@ -118,6 +125,7 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
         >
           Brand Posts
         </button>
+
         <button 
           className={`tab-btn ${currentTab === 'all' ? 'active' : ''}`}
           onClick={() => onTabChange('all')}
@@ -127,50 +135,75 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
       </div>
 
       {/* Posts Grid */}
-      <div className="posts-grid-profile">
-        {displayPosts.length === 0 ? (
-          <div 
-            style={{
-              gridColumn: '1 / -1',
-              textAlign: 'center',
-              padding: '40px 20px',
-              color: '#999',
-            }}
-          >
-            {currentTab === 'brand' ? 'No brand stories yet' : 'No posts yet'}
+<div className="posts-grid-profile">
+
+{/* 🔒 Private Profile — Show Image */}
+{userData.is_profile_private ? (
+  <div 
+    style={{
+      gridColumn: '1 / -1',
+      textAlign: 'center',
+      padding: '40px 0'
+    }}
+  >
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img
+      src="/assets/img/privateaccount.png"
+      alt="Private Account"
+      style={{
+        maxWidth: '260px',
+        width: '100%',
+        margin: '0 auto',
+        opacity: 0.95
+      }}
+    />
+  </div>
+) : displayPosts.length === 0 ? (
+
+  /* Empty state */
+  <div 
+    style={{
+      gridColumn: '1 / -1',
+      textAlign: 'center',
+      padding: '40px 20px',
+      color: '#999',
+    }}
+  >
+    {currentTab === 'brand' ? 'No brand stories yet' : 'No posts yet'}
+  </div>
+) : (
+
+  /* Posts Grid */
+  displayPosts.map((post, index) => {
+    const imageUrl = typeof post === "string" ? post : post.url
+    const brandName = typeof post === "object" ? post.brand_name : null
+
+    return (
+      <div key={index} className="post-item">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imageUrl}
+          alt={currentTab === 'brand' ? `Brand Story ${index + 1}` : `Post ${index + 1}`}
+          loading="lazy"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement
+            target.onerror = null
+            target.src = '/placeholder.png'
+          }}
+        />
+
+        {brandName && (
+          <div className="brand-badge">
+            <span className="brand-icon">🏷️</span>
+            <span className="brand-text">{brandName}</span>
           </div>
-        ) : (
-          displayPosts.map((post, index) => {
-            const imageUrl = typeof post === "string" ? post : post.url
-            const brandName = typeof post === "object" ? post.brand_name : null
-          
-            return (
-              <div key={index} className="post-item">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={imageUrl}
-                  alt={currentTab === 'brand' ? `Brand Story ${index + 1}` : `Post ${index + 1}`}
-                  loading="lazy"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                    target.onerror = null
-                    target.src = '/placeholder.png'
-                  }}
-                />
-          
-                {brandName && (
-                  <div className="brand-badge">
-                    <span className="brand-icon">🏷️</span>
-                    <span className="brand-text">{brandName}</span>
-                  </div>
-                )}
-              </div>
-            )
-          })
-          
         )}
       </div>
+    )
+  })
+)}
+</div>
+
     </>
   )
 }
-
