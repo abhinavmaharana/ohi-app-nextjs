@@ -86,7 +86,7 @@ export default function BrandPageContent({
       <div className="brand-name-section">
         <h1 className="brand-name">{displayBrandName}</h1>
         <p className="brand-description">
-          Meet our Featured Brand Hosts, the loyal taggers who made the brand their vibe now crowned as Brand Hosts.
+          Meet our <span className='brand-description-span'>Featured Brand Hosts</span>, the loyal taggers who made the brand their vibe now crowned as Brand Hosts.
         </p>
       </div>
 
@@ -163,13 +163,16 @@ export default function BrandPageContent({
         <div className="unlock-content">
           <div className='unlock-content-wrap'>
           <p className="unlock-text">
-            Want to get full access to <span className='unlock-text-highlight'>{displayBrandName}&apos;s</span> mood board? Unlock the magic with just one click!
+            Want to get full access to <span className='unlock-text-highlight'>{displayBrandName}&apos;s</span> mood board? <br/> Unlock the magic with just one click!
           </p>
-            <p className='unlock-text'>550 people hosted <span className='unlock-text-highlight'>{displayBrandName}</span> </p>
+            <p className='unlock-text-sm'>550 people hosted <span className='unlock-text-highlight'>{displayBrandName}</span> </p>
           </div>
           <button className="unlock-btn">
-            <span className="unlock-icon">🔒</span>
-            <span>Unlock</span>
+            <span className=''>Unlock</span>
+            <span className="unlock-icon"><svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M2.31527 5.55011C2.31333 4.19978 2.82627 2.89521 3.75778 1.8814C4.68928 0.867596 5.97527 0.214291 7.37424 0.0441729C8.7732 -0.125945 10.1889 0.198829 11.3555 0.957504C12.5221 1.71618 13.3593 2.85656 13.7099 4.1645C13.7866 4.44922 13.7421 4.75149 13.5861 5.00479C13.4302 5.2581 13.1755 5.44169 12.8781 5.51519C12.5808 5.58869 12.2651 5.54607 12.0006 5.3967C11.736 5.24734 11.5443 5.00347 11.4675 4.71874C11.2574 3.93378 10.7551 3.24931 10.0551 2.79393C9.35505 2.33855 8.50547 2.14359 7.66593 2.24568C6.8264 2.34776 6.05468 2.73987 5.49575 3.34834C4.93682 3.9568 4.62915 4.73976 4.63054 5.55011V8.87558H14.3547C15.3734 8.87558 16.2069 9.67369 16.2069 10.6492V18.4086C16.2069 19.8718 14.9567 21.069 13.4286 21.069H2.77833C1.25025 21.069 0 19.8718 0 18.4086V10.6492C0 9.67369 0.833497 8.87558 1.85222 8.87558H2.31527V5.55011ZM8.10345 11.3697C7.6431 11.3692 7.19632 11.5189 6.83669 11.7941C6.47705 12.0693 6.22602 12.4535 6.12493 12.8836C6.02384 13.3136 6.07872 13.7638 6.28054 14.16C6.48235 14.5562 6.81907 14.8747 7.23522 15.0632V17.7435C7.23522 17.964 7.3267 18.1755 7.48952 18.3314C7.65234 18.4873 7.87318 18.5749 8.10345 18.5749C8.33372 18.5749 8.55455 18.4873 8.71738 18.3314C8.8802 18.1755 8.97167 17.964 8.97167 17.7435V15.0632C9.38783 14.8747 9.72454 14.5562 9.92636 14.16C10.1282 13.7638 10.1831 13.3136 10.082 12.8836C9.98088 12.4535 9.72984 12.0693 9.37021 11.7941C9.01058 11.5189 8.5638 11.3692 8.10345 11.3697Z" fill="white"/>
+</svg>
+</span>
           </button>
         </div>
       </div>

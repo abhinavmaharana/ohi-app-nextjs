@@ -1840,10 +1840,26 @@ button {
 }
 
 .brand-description {
-  font-size: 14px;
+  font-size: 32px;
   line-height: 1.5;
   color: #dcdcdc;
   margin: 0;
+}
+
+.brand-description-span {
+  font-weight: 700;
+  white-space: nowrap;
+
+  /* Gradient Text */
+  background: linear-gradient(
+    101.37deg,
+    #0072FF 1.55%,
+    rgba(244, 67, 54, 0.77) 42.1%,
+    #F4BF1A 82.65%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Stories Section */
@@ -1965,6 +1981,13 @@ button {
 
 .unlock-text {
   flex: 1;
+  font-size: 20px;
+  line-height: 1.5;
+  color: #dcdcdc;
+  margin: 0;
+}
+
+.unlock-text-sm {
   font-size: 15px;
   line-height: 1.5;
   color: #dcdcdc;
@@ -1978,24 +2001,38 @@ button {
 
 .unlock-btn {
   flex-shrink: 0;
-  background: #ffd37d;
-  color: #000;
+
+  /* Gradient background */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 230, 0, 0.835294) 0%,
+    rgba(153, 129, 0, 0.835294) 100%
+  );
+
+  color: #fff;
   border: none;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 20px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s ease;
+
+  transition: all 0.25s ease;
 }
 
+/* Subtle glossy hover effect */
 .unlock-btn:hover {
-  background: #e0ad45;
+  filter: brightness(1.05);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 211, 125, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 230, 0, 0.35);
+}
+
+.unlock-btn-text {
+  color: white;
 }
 
 .unlock-icon {
