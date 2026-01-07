@@ -24,7 +24,6 @@ interface BrandPageContentProps {
   loading: boolean
 }
 
-// Demo brand hosts data (in real app, this would come from an API)
 const DEMO_BRAND_HOSTS = [
   { id: 1, name: 'John Jacobs', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop' },
   { id: 2, name: 'Mickabana', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=100&h=100&fit=crop' },
@@ -44,8 +43,7 @@ export default function BrandPageContent({
 
   console.log("Posts →", posts);
 
-  // Get unique usernames from stories for brand hosts (fallback to demo data)
-  const brandHosts = stories.length > 0 
+  const brandHosts = stories.length > 0
     ? Array.from(new Set(stories.map(s => s.username)))
         .slice(0, 6)
         .map((username, index) => ({
@@ -70,11 +68,12 @@ export default function BrandPageContent({
 
   return (
     <div className="brand-page-container">
-      {/* Header with Logo */}
+
+      {/* Header */}
       <header className="brand-page-header">
         <div className="brand-logo">
           <Image 
-            src="/assets/img/logo.png" 
+            src="/assets/img/logo.png"
             alt="Ohi Logo"
             width={28}
             height={28}
@@ -91,12 +90,14 @@ export default function BrandPageContent({
         </p>
       </div>
 
-      {/* Stories Section */}
+      {/* Stories Section — NOW SHOWS ALL STORIES */}
       {stories.length > 0 ? (
         <div className="brand-stories-section">
           <div className="stories-container">
-            {stories.slice(0, Math.max(3, stories.length)).map((story) => (
+
+            {stories.map((story) => (
               <div key={story.story_id} className="story-item">
+                
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={story.url}
@@ -109,21 +110,23 @@ export default function BrandPageContent({
                     target.style.display = 'none'
                   }}
                 />
+
                 <div className="story-overlay">
                   <div className="story-username">{story.username}</div>
                 </div>
+
               </div>
             ))}
+
           </div>
         </div>
       ) : (
         <div className="brand-stories-section">
           <div className="stories-container">
-            {/* Placeholder stories when no data */}
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3].map(i => (
               <div key={i} className="story-item">
-                <div className="story-image" style={{ backgroundColor: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ color: '#666', fontSize: '12px' }}>Story {i}</span>
+                <div className="story-image" style={{ background:'#1a1a1a', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <span style={{ color:'#666', fontSize:'12px' }}>Story {i}</span>
                 </div>
               </div>
             ))}
@@ -134,7 +137,7 @@ export default function BrandPageContent({
       {/* Brand Hosts Section */}
       <div className="brand-hosts-section">
         <div className="brand-hosts-container">
-          {brandHosts.map((host) => (
+          {brandHosts.map(host => (
             <div key={host.id} className="brand-host-item">
               <div className="brand-host-avatar">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -142,10 +145,10 @@ export default function BrandPageContent({
                   src={host.image}
                   alt={host.name}
                   onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                    target.onerror = null
-                    target.src = '/assets/img/fallback-avatar.png'
-                    target.style.display = 'none'
+                    const t = e.target as HTMLImageElement
+                    t.onerror = null
+                    t.src = '/assets/img/fallback-avatar.png'
+                    t.style.display = 'none'
                   }}
                 />
               </div>
@@ -154,68 +157,6 @@ export default function BrandPageContent({
           ))}
         </div>
       </div>
-
-      {/* Brand Posts Section */}
-<div className="brand-posts-section">
-  <h2 className="section-title">Brand Posts</h2>
-
-  <div className="posts-grid">
-    {posts.length === 0 && (
-      <div className="empty-state">
-        No brand posts yet
-      </div>
-    )}
-
-    {posts.slice(0, 12).map((post, index) => {
-      const isVideo = post.url.endsWith('.mp4') || post.url.endsWith('.mov')
-
-      return (
-        <div key={index} className="post-item">
-
-          {/* Watermark for locked posts */}
-          {!post.is_purchased && (
-    <div className="watermark-overlay">
-      <span>Premium Content</span>
-    </div>
-  )}
-
-          {/* Locked Overlay */}
-          {!post.is_purchased && (
-            <div className="lock-overlay">
-              <span className="lock-badge">🔒 Locked</span>
-            </div>
-          )}
-
-          {/* Video */}
-          {isVideo ? (
-            <video
-              src={post.url}
-              className={`post-media ${!post.is_purchased ? 'blurred' : ''}`}
-              muted
-              loop
-              playsInline
-            />
-          ) : (
-            // Image
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={post.url}
-              className={`post-media ${!post.is_purchased ? 'blurred' : ''}`}
-              alt="Brand Post"
-              onError={(e) => {
-                const t = e.target as HTMLImageElement
-                t.onerror = null
-                t.src = '/assets/img/fallback-avatar.png'
-                t.style.display = 'none'
-              }}
-            />
-          )}
-        </div>
-      )
-    })}
-  </div>
-</div>
-
 
       {/* Unlock Section */}
       <div className="brand-unlock-section">
@@ -230,47 +171,62 @@ export default function BrandPageContent({
         </div>
       </div>
 
-      {/* Additional Content Section */}
-      <div className="brand-additional-content">
-        {/* Additional Content Section */}
-{stories.length > 3 && (
-  <div className="brand-additional-content">
+      {/* Brand Posts Section */}
+      <div className="brand-posts-section">
+        <div className="posts-grid">
 
-    {/* Story 4 */}
-    {stories[3] && (
-      <div className="content-image-item">
-        <img
-          src={stories[3].url}
-          alt="Brand content"
-          className="content-image"
-          onError={e => {
-            const t = e.target as HTMLImageElement
-            t.style.display = "none"
-          }}
-        />
+          {posts.length === 0 && (
+            <div className="empty-state">No brand posts yet</div>
+          )}
+
+          {posts.slice(0, 12).map((post, index) => {
+            const isVideo =
+              post.url.endsWith('.mp4') || post.url.endsWith('.mov')
+
+            return (
+              <div key={index} className="post-item">
+
+                {!post.is_purchased && (
+                  <div className="watermark-overlay">
+                    <span>Premium Content</span>
+                  </div>
+                )}
+
+                {!post.is_purchased && (
+                  <div className="lock-overlay">
+                    <span className="lock-badge">🔒 Locked</span>
+                  </div>
+                )}
+
+                {isVideo ? (
+                  <video
+                    src={post.url}
+                    className={`post-media ${!post.is_purchased ? 'blurred' : ''}`}
+                    muted
+                    loop
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    src={post.url}
+                    className={`post-media ${!post.is_purchased ? 'blurred' : ''}`}
+                    alt="Brand Post"
+                    onError={(e) => {
+                      const t = e.target as HTMLImageElement
+                      t.onerror = null
+                      t.src = '/assets/img/fallback-avatar.png'
+                      t.style.display = 'none'
+                    }}
+                  />
+                )}
+
+              </div>
+            )
+          })}
+
+        </div>
       </div>
-    )}
 
-    {/* Story 5 */}
-    {stories[4] && (
-      <div className="content-image-item">
-        <img
-          src={stories[4].url}
-          alt="Brand content"
-          className="content-image"
-          onError={e => {
-            const t = e.target as HTMLImageElement
-            t.style.display = "none"
-          }}
-        />
-      </div>
-    )}
-
-  </div>
-)}
-
-      </div>
     </div>
   )
 }
-
