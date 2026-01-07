@@ -161,9 +161,12 @@ export default function BrandPageContent({
       {/* Unlock Section */}
       <div className="brand-unlock-section">
         <div className="unlock-content">
+          <div className='unlock-content-wrap'>
           <p className="unlock-text">
-            Want to get full access to {displayBrandName}&apos;s mood board? Unlock the magic with just one click!
+            Want to get full access to <span className='unlock-text-highlight'>{displayBrandName}&apos;s</span> mood board? Unlock the magic with just one click!
           </p>
+            <p className='unlock-text'>550 people hosted <span className='unlock-text-highlight'>{displayBrandName}</span> </p>
+          </div>
           <button className="unlock-btn">
             <span className="unlock-icon">🔒</span>
             <span>Unlock</span>

@@ -1916,15 +1916,27 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: auto;
   gap: 16px;
+}
+
+.unlock-content-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: auto;
 }
 
 .unlock-text {
   flex: 1;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
   color: #dcdcdc;
   margin: 0;
+}
+
+.unlock-text-highlight {
+  color: #ffd37d;
+  font-size: 20px;
 }
 
 .unlock-btn {
