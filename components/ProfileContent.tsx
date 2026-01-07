@@ -127,7 +127,7 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
       </div>
 
       {/* Posts Grid */}
-      <div className="posts-grid">
+      <div className="posts-grid-profile">
         {displayPosts.length === 0 ? (
           <div 
             style={{

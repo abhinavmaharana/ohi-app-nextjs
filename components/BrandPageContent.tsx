@@ -187,7 +187,7 @@ export default function BrandPageContent({
               post.url.endsWith('.mp4') || post.url.endsWith('.mov')
 
             return (
-              <div key={index} className="post-item">
+              <div key={index} className="post-item-brand">
 
 {!post.is_purchased && (
   <div className="watermark-overlay">
