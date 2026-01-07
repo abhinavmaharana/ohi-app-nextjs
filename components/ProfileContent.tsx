@@ -210,12 +210,23 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
           }}
         />
 
-        {brandName && (
-          <div className="brand-badge">
-            <span className="brand-icon">🏷️</span>
-            <span className="brand-text">{brandName}</span>
-          </div>
-        )}
+{brandName && (
+  <div className="brand-badge">
+    
+    {/* Brand Tag Image */}
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img
+      src="/assets/img/brandtag.png"
+      alt="Brand Tag"
+      className="brand-badge-img"
+    />
+
+    {/* Brand Name */}
+    <span className="brand-badge-text">{brandName}</span>
+  </div>
+)}
+
+
       </div>
     )
   })

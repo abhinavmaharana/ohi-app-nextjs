@@ -1692,28 +1692,45 @@ button {
   /* border-radius: 50%; */
 }
 
+/* Sticker badge container */
 .brand-badge {
   position: absolute;
   top: 10px;
   left: 10px;
-
+  height: 26px;
   display: flex;
   align-items: center;
-  gap: 6px;
-
-  background: #ffffff;
-  color: #111;
-  font-size: 12px;
-  font-weight: 600;
-
-  padding: 6px 10px;
-  border-radius: 999px;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,.18);
-  border: 1px solid rgba(0,0,0,.08);
-
-  z-index: 3;
 }
+
+/* PNG Tag Image */
+.brand-badge-img {
+  height: 26px;
+  width: auto;
+  display: block;
+}
+
+/* Brand text inside white area */
+.brand-badge-text {
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  /* Gradient Text */
+  background: linear-gradient(
+    101.37deg,
+    #0072FF 1.55%,
+    rgba(244, 67, 54, 0.77) 42.1%,
+    #F4BF1A 82.65%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 
 .brand-icon {
   color: #111;
@@ -1722,6 +1739,8 @@ button {
   padding: 3px 6px;
   border-radius: 6px;
 }
+
+
 
 .brand-posts-section {
   padding: 16px;

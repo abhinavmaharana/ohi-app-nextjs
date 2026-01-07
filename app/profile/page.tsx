@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import ProfileContent from '@/components/ProfileContent'
 import LoginModal from '@/components/LoginModal'
-import Footer from '@/components/Footer'
+// import Footer from '@/components/Footer'
 
 // API Configuration - Using Next.js API routes to avoid CORS issues
 const USE_DEMO_MODE = true // Set to false to disable demo mode fallback
@@ -294,7 +294,7 @@ function ProfilePageContent() {
         </div>
 
         {/* Footer */}
-        <Footer />
+        {/* <Footer /> */}
       </div>
 
       {/* Login Modal - Rendered outside blurred container */}
