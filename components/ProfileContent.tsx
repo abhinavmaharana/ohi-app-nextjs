@@ -141,7 +141,7 @@ export default function ProfileContent({ userData, brandStories, allPosts, curre
           className={`tab-btn ${currentTab === 'brand' ? 'active' : ''}`}
           onClick={() => onTabChange('brand')}
         >
-          Brand Posts
+          Brand Board
         </button>
 
         <button 
