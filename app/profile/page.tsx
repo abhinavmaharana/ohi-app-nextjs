@@ -251,7 +251,7 @@ function ProfilePageContent() {
         <header className="profile-header">
           <div className="logo">
             <Image 
-              src="/assets/img/logo.png" 
+              src="/assets/img/newlogo.png" 
               alt="Ohi Logo"
               width={44}
               height={44}
