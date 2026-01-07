@@ -186,17 +186,21 @@ export default function BrandPageContent({
             return (
               <div key={index} className="post-item">
 
-                {!post.is_purchased && (
-                  <div className="watermark-overlay">
-                    <span>Premium Content</span>
-                  </div>
-                )}
+{!post.is_purchased && (
+  <div className="watermark-overlay">
+    <img
+      src="/assets/img/WATERMARK.png"
+      alt="Premium watermark"
+    />
+  </div>
+)}
 
-                {!post.is_purchased && (
+
+                {/* {!post.is_purchased && (
                   <div className="lock-overlay">
                     <span className="lock-badge">🔒 Locked</span>
                   </div>
-                )}
+                )} */}
 
                 {isVideo ? (
                   <video
