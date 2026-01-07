@@ -11,6 +11,7 @@ interface Story {
   url: string
   brand_name: string
   username: string
+  user_image: string
   total_views: number
 }
 

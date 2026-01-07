@@ -1880,7 +1880,7 @@ button {
   flex: 0 0 calc(33.333% - 8px);
   min-width: 120px;
   position: relative;
-  border-radius: 12px;
+  /* border-radius: 12px; */
   overflow: hidden;
   scroll-snap-align: start;
 }
@@ -1894,11 +1894,25 @@ button {
 
 .story-overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  padding: 12px 8px 8px;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.story-user-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.story-profile-image {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.6);
 }
 
 .story-username {
@@ -1908,6 +1922,20 @@ button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.story-views-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.9;
+}
+
+.story-views-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  font-weight: 600;
 }
 
 .story-view-wrapper {
@@ -2080,11 +2108,16 @@ button {
 
   .story-item {
     flex: 0 0 calc(40% - 8px);
-    min-width: 140px;
+    min-width: 180px;
+  }
+
+  .story-profile-image{
+    height: 5px;
+    width: 5px;
   }
 
   .story-image {
-    height: 220px;
+    height: 340px;
   }
 
   .unlock-content {
