@@ -75,8 +75,8 @@ export default function BrandPageContent({
           <Image 
             src="/assets/img/newlogo.png"
             alt="Ohi Logo"
-            width={28}
-            height={28}
+            width={40}
+            height={40}
             style={{ objectFit: 'contain' }}
           />
         </div>

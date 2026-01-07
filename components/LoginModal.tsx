@@ -22,7 +22,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       <div className="login-modal">
         <div className="modal-logo">
           <Image 
-            src="/assets/img/newlogo.png.png" 
+            src="/assets/img/newlogo.png" 
             alt="Ohi Logo"
             width={60}
             height={60}
