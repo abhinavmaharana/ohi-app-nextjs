@@ -73,7 +73,7 @@ export default function BrandPageContent({
       <header className="brand-page-header">
         <div className="brand-logo">
           <Image 
-            src="/assets/img/logo.png"
+            src="/assets/img/newlogo.png"
             alt="Ohi Logo"
             width={28}
             height={28}
