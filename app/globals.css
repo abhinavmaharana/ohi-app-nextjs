@@ -1697,39 +1697,46 @@ button {
   position: absolute;
   top: 10px;
   left: 10px;
-  height: 26px;
-  display: flex;
+
+  display: inline-flex;
   align-items: center;
+
+  height: 28px;
+  padding-right: 10px;
+
+  background: #fff;
+  border-radius: 16px;
+
+  z-index: 5;
 }
 
-/* PNG Tag Image */
+/* PNG Tag Image (left part) */
 .brand-badge-img {
-  height: 26px;
+  height: 28px;
   width: auto;
   display: block;
 }
 
-/* Brand text inside white area */
+/* Brand text */
 .brand-badge-text {
-  position: absolute;
-  left: 28px;
-  top: 50%;
-  transform: translateY(-50%);
+  margin-left: 6px;
+  margin-right: 6px;
+
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
 
-  /* Gradient Text */
   background: linear-gradient(
     101.37deg,
     #0072FF 1.55%,
     rgba(244, 67, 54, 0.77) 42.1%,
     #F4BF1A 82.65%
   );
+
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
+
 
 
 .brand-icon {
