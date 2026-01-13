@@ -1692,51 +1692,78 @@ button {
   /* border-radius: 50%; */
 }
 
-/* ===== Brand Badge ===== */
+/* ===== Brand Badge Container ===== */
 .brand-badge {
   position: absolute;
   top: 8px;
-  left: 8px;
+  left: 15px;
 
   display: inline-flex;
   align-items: center;
+  gap: 2px;
 
-  height: 24px;              /* ⬅️ SLIM */
-  padding: 0 10px 0 6px;
-  gap: 6px;
+  height: 24px;
+  padding: 0 8px 0 6px;
 
   background: #fff;
-  border-radius: 999px;
+  border-radius: 5px;
 
   z-index: 5;
   box-shadow: 0 2px 6px rgba(0,0,0,0.18);
 }
 
-/* Icon container — optical centering */
+/* ===== CSS Price Tag Icon ===== */
 .brand-badge-icon {
-  width: 18px;
-  height: 18px;
+  position: relative;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 14px;
+  height: 10px;
 
+  top: 8px;
+  left: -14px;
+
+  background: #FFD54F;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+
+  transform: rotate(-40deg);
   flex-shrink: 0;
 }
 
-/* Icon itself */
-.brand-badge-icon img {
-  width: 16px;
-  height: 16px;
-  display: block;
+/* tag hole */
+.brand-badge-icon::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+
+  width: 3px;
+  height: 3px;
+
+  background: #fff;
+  border-radius: 50%;
 }
 
-/* Text — vertically balanced */
+/* tag cut / notch */
+.brand-badge-icon::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 0;
+
+  width: 0;
+  height: 0;
+
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #FFD54F;
+}
+
+/* ===== Brand Name ===== */
 .brand-badge-text {
   font-size: 12px;
   font-weight: 600;
   line-height: 1;
-
   white-space: nowrap;
 
   background: linear-gradient(
@@ -1748,6 +1775,8 @@ button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+
 
 
 

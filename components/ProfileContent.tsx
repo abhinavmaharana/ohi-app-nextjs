@@ -161,16 +161,11 @@ export default function ProfileContent({
 
                 {/* ✅ FIXED BRAND BADGE */}
                 {brandName && (
-  <div className="brand-badge">
-    <span className="brand-badge-icon">
-      <img
-        src="/assets/img/brandtag.png"
-        alt="Brand Tag"
-      />
-    </span>
-    <span className="brand-badge-text">{brandName}</span>
-  </div>
-)}
+                  <div className="brand-badge">
+                    <span className="brand-badge-icon" />
+                    <span className="brand-badge-text">{brandName}</span>
+                  </div>
+                )}
               </div>
             )
           })
