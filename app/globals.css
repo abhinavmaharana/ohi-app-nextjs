@@ -1432,25 +1432,26 @@ button {
   margin-bottom: 40px;
 }
 
-.post-item {
-  aspect-ratio: 1;
-  position: relative;
-  overflow: hidden;
-  background: #1a1a1a;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
+
 
 .post-item:hover {
   transform: scale(1.02);
   z-index: 1;
 }
 
-.post-item img {
+.post-item img,
+.post-item video,
+.post-media {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+@media (hover: none) {
+  .post-item:hover {
+    transform: none;
+  }
 }
 
 /* Login Modal */
@@ -1809,10 +1810,13 @@ button {
 
 .post-item {
   position: relative;
-  overflow: hidden;
   width: 100%;
+  aspect-ratio: 1 / 1; /* 🔥 REQUIRED */
+  overflow: hidden;
+  background: #1a1a1a;
   border-radius: 8px;
 }
+
 
 .post-item-brand {
   position: relative;
