@@ -151,6 +151,36 @@ function ProfilePageContent() {
   const [showModal, setShowModal] = useState(false)
   const [usingDemoData, setUsingDemoData] = useState(false)
 
+  async function logWeblinkClick(userId: string) {
+    try {
+      await fetch('/api/logging', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_name: 'weblink_share_click',
+          event_on_type: 'User',
+          event_on_id: userId,
+        }),
+      })
+    } catch (err) {
+      console.error('Failed to log weblink click', err)
+    }
+  }
+  
+  useEffect(() => {
+    if (!userId) return
+  
+    const logged = sessionStorage.getItem(`weblink_logged_${userId}`)
+    if (logged) return
+  
+    logWeblinkClick(userId)
+    sessionStorage.setItem(`weblink_logged_${userId}`, 'true')
+  }, [userId])
+  
+  
+
   const initializePage = useCallback(async () => {
     setLoading(true)
     setError(null)

@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import { useEffect } from 'react'
+
 
 interface Story {
   story_id: number
@@ -56,6 +58,36 @@ export default function BrandPageContent({
     : DEMO_BRAND_HOSTS
 
   const displayBrandName = brandName || 'Brand'
+
+  async function logBrandWeblinkShareClick(brandId: string) {
+    try {
+      await fetch('/api/logging', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_name: 'brand_weblink_share_click',
+          event_on_type: 'User',
+          event_on_id: brandId,
+        }),
+      })
+    } catch (err) {
+      console.error('Brand weblink logging failed', err)
+    }
+  }
+
+  useEffect(() => {
+    if (!brandId) return
+  
+    const logged = sessionStorage.getItem(`brand_weblink_${brandId}`)
+    if (logged) return
+  
+    logBrandWeblinkShareClick(brandId)
+    sessionStorage.setItem(`brand_weblink_${brandId}`, 'true')
+  }, [brandId])
+  
+  
 
   if (loading) {
     return (
