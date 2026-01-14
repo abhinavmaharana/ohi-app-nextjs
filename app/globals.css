@@ -1696,40 +1696,36 @@ button {
 /* ===== Brand Badge Container ===== */
 .brand-badge {
   position: absolute;
-  top: 8px;
-  left: 15px;
+  top: 6px;
+  left: 6px;
 
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: 6px;
 
-  height: 24px;
-  padding: 0 8px 0 6px;
+  min-height: 22px;
+  padding: 4px 8px;
+
+  max-width: calc(100% - 12px); /* 🔥 important */
 
   background: #fff;
-  border-radius: 5px;
-
+  border-radius: 6px;
   z-index: 5;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
 }
+
 
 /* ===== CSS Price Tag Icon ===== */
 .brand-badge-icon {
-  position: relative;
-
-  width: 14px;
-  height: 10px;
-
-  top: 8px;
-  left: -14px;
+  width: 12px;
+  height: 8px;
 
   background: #FFD54F;
   border-radius: 2px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.25);
 
-  transform: rotate(-40deg);
+  /* transform: rotate(-40deg); */
   flex-shrink: 0;
 }
+
 
 /* tag hole */
 .brand-badge-icon::before {
@@ -1762,19 +1758,29 @@ button {
 
 /* ===== Brand Name ===== */
 .brand-badge-text {
-  font-size: 12px;
+  font-size: clamp(10px, 2.8vw, 12px); /* 🔥 responsive */
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.2;
+
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 🔥 prevents overflow */
 
-  background: linear-gradient(
-    90deg,
-    #2979ff,
-    #ff9800
-  );
+  max-width: 80px; /* desktop default */
 
+  background: linear-gradient(90deg, #2979ff, #ff9800);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 480px) {
+  .brand-badge-text {
+    max-width: 64px; /* tighter on mobile */
+  }
+
+  .brand-badge {
+    padding: 3px 6px;
+  }
 }
 
 
