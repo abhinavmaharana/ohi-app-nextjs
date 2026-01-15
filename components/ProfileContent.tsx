@@ -145,12 +145,15 @@ export default function ProfileContent({
               <div key={index} className="post-item">
                 {isVideo ? (
                   <video
-                    className="post-media"
-                    src={imageUrl}
-                    muted
-                    playsInline
-                    preload="metadata"
-                  />
+                  className="post-media"
+                  src={imageUrl}
+                  muted
+                  playsInline
+                  autoPlay
+                  loop
+                  preload="metadata"
+                  controls={false}
+                />
                 ) : (
                   <img
                     src={imageUrl}
