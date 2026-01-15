@@ -240,6 +240,8 @@ function ProfilePageContent() {
     }
   }, [userId])
 
+  // console.log(userData)
+
   useEffect(() => {
     initializePage()
   }, [initializePage])

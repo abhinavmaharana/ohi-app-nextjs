@@ -1724,10 +1724,12 @@ button {
 
 /* ===== Brand Text ===== */
 .brand-badge-text {
-  font-size: 12px;  
+  font-size: 12px;
   font-weight: 700;
   line-height: 1;
 
+  /* 🔥 REQUIRED FOR TRUNCATION */
+  max-width: 90px;          /* desktop default */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1739,19 +1741,25 @@ button {
 
 @media (max-width: 480px) {
   .brand-badge {
-    padding: 10px 16px;
-    gap: 10px;
-    border-radius: 14px;
+    padding: 4px 6px 4px 6px;
+    border-radius: 5px;
   }
 
   .brand-badge-icon {
-    width: 26px;
+    width: 18px;
+    left: -15px;
+
+    /* 🔥 KEY FIX */
+    top: 50%;
+    transform: translateY(-50%) rotate(-8deg);
   }
 
   .brand-badge-text {
-    font-size: 18px;
+    max-width: 64px;        /* 👈 prevents overflow on small tiles */
+    font-size: 13px;
   }
 }
+
 
 
 
