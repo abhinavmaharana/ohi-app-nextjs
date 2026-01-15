@@ -1300,7 +1300,7 @@ button {
 /* Profile Info Section */
 .profile-info {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 30px;
   margin-bottom: 20px;
 }
@@ -1439,8 +1439,8 @@ button {
   z-index: 1;
 }
 
-.post-item img,
-.post-item video,
+.post-item > img,
+.post-item > video,
 .post-media {
   width: 100%;
   height: 100%;
@@ -1696,92 +1696,63 @@ button {
 /* ===== Brand Badge Container ===== */
 .brand-badge {
   position: absolute;
-  top: 6px;
-  left: 6px;
+  top: 10px;
+  left: 18px;
 
   display: inline-flex;
   align-items: center;
   gap: 6px;
 
-  min-height: 22px;
-  padding: 4px 8px;
-
-  max-width: calc(100% - 12px); /* 🔥 important */
-
+  padding: 6px 12px 6px 12px;
   background: #fff;
   border-radius: 6px;
+
   z-index: 5;
 }
 
-
-/* ===== CSS Price Tag Icon ===== */
+/* ===== Price Tag Icon (FIXED) ===== */
 .brand-badge-icon {
-  width: 12px;
-  height: 8px;
+  position: absolute;
+  left: -18px;          /* 👈 pulls it OUT */
+  top: 66%;
+  transform: translateY(-50%) rotate(-8deg);
 
-  background: #FFD54F;
-  border-radius: 2px;
-
-  /* transform: rotate(-40deg); */
+  width: 20px;
+  height: auto;
   flex-shrink: 0;
 }
 
-
-/* tag hole */
-.brand-badge-icon::before {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 3px;
-
-  width: 3px;
-  height: 3px;
-
-  background: #fff;
-  border-radius: 50%;
-}
-
-/* tag cut / notch */
-.brand-badge-icon::after {
-  content: '';
-  position: absolute;
-  right: -5px;
-  top: 0;
-
-  width: 0;
-  height: 0;
-
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid #FFD54F;
-}
-
-/* ===== Brand Name ===== */
+/* ===== Brand Text ===== */
 .brand-badge-text {
-  font-size: clamp(10px, 2.8vw, 12px); /* 🔥 responsive */
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: 12px;  
+  font-weight: 700;
+  line-height: 1;
 
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* 🔥 prevents overflow */
+  text-overflow: ellipsis;
 
-  max-width: 80px; /* desktop default */
-
-  background: linear-gradient(90deg, #2979ff, #ff9800);
+  background: linear-gradient(90deg, #6A5ACD, #FF9800);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 @media (max-width: 480px) {
-  .brand-badge-text {
-    max-width: 64px; /* tighter on mobile */
+  .brand-badge {
+    padding: 10px 16px;
+    gap: 10px;
+    border-radius: 14px;
   }
 
-  .brand-badge {
-    padding: 3px 6px;
+  .brand-badge-icon {
+    width: 26px;
+  }
+
+  .brand-badge-text {
+    font-size: 18px;
   }
 }
+
 
 
 
